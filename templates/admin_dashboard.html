@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<!-- Welcome Banner -->
+<div class="navbar mb-4">
+  <h4 class="text-success">Welcome to Admin</h4>
+  <nav class="mb-4">
+    <a href="#" class="me-3">Home</a>
+    <a href="{{ url_for('admin.view_users') }}" class="me-3">Users</a>
+    <a href="{{ url_for('admin.summary') }}" class="me-3">Summary</a>
+  </nav>
+    <form method="GET" action="{{ url_for('admin.search_records') }}" class=" mb-3" style="background-color: transparent; box-shadow: none;">
+      <input type="text" name="query" class="me-2" placeholder="Search by user ID, name, pin or location" value="{{ request.args.get('query', '') }}">
+      <button type="submit" class="btn btn-primary">Search</button>
+     </form>
+ 
+  
+</div>
+
+
+<h4 class="mb-3">Parking Lots</h4>
+
+<div class="row">
+  {% for lot in lots %}
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5>Parking#{{ lot.id }}: {{ lot.prime_location_name }}</h5>
+        <div class="mb-2">
+          <a href="{{ url_for('admin.edit_lot', lot_id=lot.id) }}" class="text-primary">Edit</a> |
+          <a href="{{ url_for('admin.delete_lot', lot_id=lot.id) }}" class="text-danger">Delete</a>
+        </div>
+
+        {% set total = lot.parking_spots|length %}
+        {% set occupied = lot.parking_spots|selectattr("status", "equalto", "O")|list|length %}
+        <p class="text-muted">(Occupied: {{ occupied }}/{{ total }})</p>
+
+        <!-- Spot Grid -->
+        <div class="d-flex flex-wrap">
+          {% for spot in lot.parking_spots %}
+          <a href="{% if spot.status == 'O' %}{{ url_for('admin.view_spot_details', spot_id=spot.id) }}{% else %}#{% endif %}"
+          title="Spot {{ spot.id }}"
+          class="spot-box {{ 'occupied' if spot.status == 'O' else 'available' }}">
+         {{ lot.parking_spots.index(spot)+1 }}
+       </a>
+       
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Add Lot Button -->
+<a href="{{ url_for('admin.add_lot') }}" class="btn btn-outline-primary">+ Add Lot</a>
+
+{% endblock %}

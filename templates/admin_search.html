@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h3>Search Results for "{{ query }}"</h3>
+
+{% if users %}
+<h4 class="mt-4">Matching Users</h4>
+<table class="table table-bordered">
+    <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Pin Code</th></tr></thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.pin_code }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if lots %}
+<h4 class="mt-4">Matching Parking Lots</h4>
+<table class="table table-bordered">
+    <thead><tr><th>ID</th><th>Location</th><th>Address</th><th>Pin</th></tr></thead>
+    <tbody>
+        {% for lot in lots %}
+        <tr>
+            <td>{{ lot.id }}</td>
+            <td>{{ lot.prime_location_name }}</td>
+            <td>{{ lot.address }}</td>
+            <td>{{ lot.pin_code }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if not users and not lots %}
+<div class="alert alert-warning">No matches found.</div>
+{% endif %}
+
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

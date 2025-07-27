@@ -1,0 +1,217 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 960px;
+    margin-top: 30px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Forms */
+form {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+}
+
+form label {
+    font-weight: 600;
+    color: #495057;
+}
+
+form input, form select {
+    border-radius: 4px;
+}
+
+form button {
+    min-width: 120px;
+    font-weight: 600;
+}
+
+table {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+}
+
+table thead {
+    background-color: #343a40;
+    color: #fff;
+}
+
+table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+table th, table td {
+    vertical-align: middle !important;
+}
+
+.alert {
+    font-weight: 600;
+}
+
+.btn {
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1d3557;
+}
+
+.btn-success:hover {
+    background-color: #2a9d8f;
+}
+
+.btn-danger:hover {
+    background-color: #e63946;
+}
+
+.btn-warning:hover {
+    background-color: #f4a261;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    table {
+        font-size: 0.9rem;
+    }
+}
+
+
+.spot-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 6px;
+    border: 1px solid black;
+    box-shadow: 5px 5px 5px black;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .spot-box.available {
+    background-color: green;
+  }
+  
+  .spot-box.occupied {
+    background-color: red;
+  }
+    
+.card-body{
+    box-shadow: 10px 10px 10px black;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.custom-input-height {
+    height: 45px;
+    font-size: 16px;
+}
+/* .spot-button {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 6px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.spot-button input[type="radio"] {
+    display: none;
+}
+
+.spot-button:hover {
+    background-color: #28a745;
+}
+
+.spot-button.occupied {
+    background-color: gray;
+    cursor: not-allowed;
+    pointer-events: none;
+} */
+
+.search{
+    height: 5px;
+}
+.summery{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+}
+canvas.big-chart {
+    width: 650px !important;
+    height: 650px !important;
+    margin: 20px;
+  }
+
+  .spot-button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f9fa; /* unselected color */
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.spot-button input[type="radio"] {
+    display: none;
+}
+
+/* SELECTED / TICKED */
+.spot-button input[type="radio"]:checked + span,
+.spot-button input[type="radio"]:checked ~ * {
+    background-color: #007bff;  /* selected background */
+    color: #fff;
+    border-color: #0056b3;
+}
+
+/* OCCUPIED DISABLED */
+.spot-button.occupied {
+    background-color: #ddd;
+    border-color: #bbb;
+    color: #888;
+    cursor: not-allowed;
+}

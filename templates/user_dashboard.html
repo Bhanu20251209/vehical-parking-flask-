@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Welcome to User Dashboard</h2>
+    <a href="{{ url_for('user.user_time_summary', user_id=current_user.id) }}" class="btn btn-outline-info mb-3">
+      View Time Summary
+  </a>
+
+    <!-- Recent Parking History -->
+    <h4>Recent Parking History</h4>
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Vehicle No</th>
+                <th>Timestamp</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in recent %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.spot.lot.prime_location_name }}</td>
+                <td>{{ r.vehicle_number }}</td>
+                <td>{{ r.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    {% if not r.leaving_timestamp %}
+                    <a href="{{ url_for('user.release_spot', res_id=r.id) }}" class="btn btn-sm btn-danger">Release</a>
+                    {% else %}
+                    <span class="btn btn-sm btn-success">Parked Out</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No parking history found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Search bar -->
+    <h5 class="mt-5">Search parking @location/pin code:</h5>
+    <form method="GET" class="d-flex mb-4" role="search">
+        <input type="text" name="search" class="form-control me-2 custom-input-height" placeholder="e.g. Dadar Road, 400028" value="{{ request.args.get('search', '') }}">
+        <button class="btn btn-primary custom-input-height">Search</button>
+    </form>
+
+    <!-- Search results -->
+    {% if parking_lots %}
+    <h4>Parking Lots @ {{ search_term }}</h4>
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Address</th>
+                <th>Availability</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lot in parking_lots %}
+            <tr>
+                <td>{{ lot.id }}</td>
+                <td>{{ lot.address }}</td>
+                <td>{{ lot.available }}</td>
+                <td>
+                    <form method="GET" action="{{ url_for('user.book_spot') }}">
+                        <input type="hidden" name="lot_id" value="{{ lot.id }}">
+                        <button class="btn btn-sm btn-primary">Book</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif search_term %}
+    <div class="alert alert-warning">No available parking lots found for "{{ search_term }}".</div>
+    {% endif %}
+</div>
+{% endblock %}

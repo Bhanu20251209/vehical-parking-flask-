@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Select Parking Spot{% endblock %}
+
+{% block content %}
+<h3>Select a Parking Spot in Lot #{{ lot.id }} (Available: {{ spots|length }})</h3>
+
+{% if spots %}
+<form method="POST">
+    <input type="hidden" name="lot_id" value="{{ lot.id }}">
+
+    <div class="d-flex flex-wrap" style="gap: 10px;">
+        {% for spot in spots %}
+        <label class="spot-button {% if spot.status == 'O' %}occupied{% endif %}">
+            <input type="radio" name="spot_id" value="{{ spot.spot_number }}" required {% if spot.status == 'O' %}disabled{% endif %}>
+            {{ spot.spot_number }}
+        </label>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4">
+        <label>Vehicle Number:</label>
+        <input type="text" name="vehicle_number" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Reserve</button>
+    <a href="{{ url_for('user.user_dashboard') }}" class="btn btn-secondary mt-3">Cancel</a>
+</form>
+{% else %}
+<div class="alert alert-warning">No available spots in this parking lot.</div>
+{% endif %}
+{% endblock %}
+
+

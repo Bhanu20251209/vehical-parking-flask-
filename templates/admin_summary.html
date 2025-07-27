@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Admin Summary{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Admin Summary Dashboard</h2>
+
+<div class="summary mb-4">
+    <div class="col-md-6">
+        <h5 class="text-center">Revenue by Parking Lot (₹)</h5>
+        <canvas id="revenueChart" class="big-chart"></canvas>></canvas>
+       
+    </div>
+
+    <div class="col-md-6">
+        <h5 class="text-center">Occupancy Status per Lot</h5>
+        <canvas id="occupancyChart" class="big-chart"></canvas>></canvas>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const lotNames = {{ lot_names | tojson | safe }};
+  const revenues = {{ revenues | tojson | safe }};
+  const occupied = {{ occupied_counts | tojson | safe }};
+  const available = {{ available_counts | tojson | safe }};
+
+
+new Chart(document.getElementById('revenueChart'), {
+    type: 'pie',
+    data: {
+        labels: lotNames,
+        datasets: [{
+            label: 'Revenue (₹)',
+            data: revenues,
+            backgroundColor: [
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+            ]
+        }]
+    }
+});
+
+new Chart(document.getElementById('occupancyChart'), {
+    type: 'bar',
+    data: {
+        labels: lotNames,
+        datasets: [
+            {
+                label: 'Occupied',
+                data: occupied,
+                backgroundColor: '#FF6384'
+            },
+            {
+                label: 'Available',
+                data: available,
+                backgroundColor: '#36A2EB'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

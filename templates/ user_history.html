@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Parking History{% endblock %}
+
+{% block content %}
+<h2>Parking History</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Spot</th>
+            <th>Lot</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for res in history %}
+        <tr>
+            <td>{{ res.spot.id }}</td>
+            <td>{{ res.spot.lot.prime_location_name }}</td>
+            <td>{{ res.parking_timestamp }}</td>
+            <td>{{ res.leaving_timestamp or 'Active' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Occupied Spot Details{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">Occupied Parking Spot Details</h3>
+
+<div class="card p-4">
+    <div class="mb-3">
+        <label><strong>Spot ID:</strong></label>
+        <input type="text" class="form-control" value="{{ spot.id }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label><strong>Customer ID:</strong></label>
+        <input type="text" class="form-control" value="{{ user.id }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label><strong>Customer ID:</strong></label>
+        <input type="text" class="form-control" value="{{ user.name }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label><strong>Vehicle Number:</strong></label>
+        <input type="text" class="form-control" value="{{ reservation.vehicle_number }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label><strong>Parking Time:</strong></label>
+        <input type="text" class="form-control" value="{{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}" disabled>
+    </div>
+    <div class="mb-3">
+        <label><strong>Est. Parking Cost (₹):</strong></label>
+        <input type="text" class="form-control" value="{{ estimated_cost }}" disabled>
+    </div>
+
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary mt-3">Close</a>
+</div>
+{% endblock %}
